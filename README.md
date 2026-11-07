@@ -29,8 +29,6 @@ It targets Linux, macOS and Windows.
 | --- | --- | --- |
 | ![The starter picker dialog: every Pokémon in the game, searchable by name or number](docs/screenshots/starter-picker.png) | ![The dialog after randomizing and saving: new starters, seed and settings string](docs/screenshots/saved.png) | ![The batch randomization dialog: several randomized ROMs in one go, each with its own seed](docs/screenshots/batch.png) |
 
-`pnpm screenshots` retakes them; see [the test strategy](docs/testing.md#10-readme-screenshots).
-
 ## Status
 
 | Phase | Scope | State |
