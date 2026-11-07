@@ -1,14 +1,10 @@
 name: CI
 
-# Runs on demand only: the checks run locally before every merge (tools/ci.sh), and hosted
-# runners need a paid plan for this private repository. A self-hosted runner can take
-# `runs-on` later.
-# Once the repository is public, hosted runners are free: add these triggers to run CI on every push to main and
-# every pull request (release.yml already runs on pushed v* tags).
-#   push:
-#     branches: [main]
-#   pull_request:
+# Runs on every push to main and every pull request, and on demand. The same checks run locally with tools/ci.sh.
 on:
+  push:
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
