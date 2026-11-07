@@ -11,10 +11,13 @@ notes. There are two ways to build the bundles:
 | Bundle | CI | Local (`tools/bundle.sh`) |
 | --- | --- | --- |
 | AppImage, `.deb`, `.rpm` | ubuntu-22.04 | `linux` |
+| AppImage, `.deb`, `.rpm` for ARM64 | ubuntu-22.04-arm | no |
 | Flatpak (`potato-pokemon-randomizer_X.Y.Z_x86_64.flatpak`) | flatpak-builder container | `flatpak` |
+| Flatpak for ARM64 (`…_aarch64.flatpak`) | flatpak-builder container on ubuntu-24.04-arm | no |
 | Arch package (`potato-pokemon-randomizer-X.Y.Z-1-x86_64.pkg.tar.zst`), from the `.deb` | archlinux container | no: `makepkg` in `packaging/arch` |
 | Windows NSIS installer (`*_x64-setup.exe`) | windows-latest | `windows` (cross-compiled) |
 | Windows `.msi` | windows-latest | no: WiX only runs on Windows |
+| Windows ARM64 NSIS installer (`*_arm64-setup.exe`) | windows-latest, cross-compiled | no |
 | macOS universal `.dmg` | macos-latest | no |
 
 Bundles are not signed yet: Windows SmartScreen and macOS Gatekeeper warn on first start.
@@ -41,7 +44,8 @@ Bundles are not signed yet: Windows SmartScreen and macOS Gatekeeper warn on fir
 
 ## 2a. Tag → CI release (public repository)
 
-The pushed tag starts the `Release` workflow (or run it by hand: Actions → Release → Run workflow, with the tag). It
+The pushed tag starts the `Release` workflow (or run it by hand: Actions → Release → Run workflow, with the tag;
+untick "Attach the bundles" to only build them as run artifacts, for example to add new bundles to a release). It
 builds the bundles on Linux, Windows and macOS, the Flatpak from the Linux binary, and creates a **draft** release
 for the tag with the CHANGELOG entry as notes. Download a few bundles, try them (see the checks below), then publish
 the draft on GitHub.
