@@ -1,8 +1,8 @@
 name: Release
 
 # Builds the bundles of a release on hosted runners and attaches them to a draft GitHub Release for the tag, with the
-# version's CHANGELOG entry as notes: Linux (AppImage, .deb, .rpm), the Flatpak, Windows (NSIS and .msi) and a
-# universal macOS .dmg. Runs when a v* tag is pushed, or on demand for an existing tag.
+# version's CHANGELOG entry as notes: Linux (AppImage, .deb, .rpm), the Flatpak, an Arch package, Windows (NSIS and
+# .msi) and a universal macOS .dmg. Runs when a v* tag is pushed, or on demand for an existing tag.
 #
 # Without hosted runners, tools/bundle.sh and tools/release.sh build and publish the same bundles from a Linux
 # machine, without the .msi and .dmg; see docs/release.md.
@@ -116,9 +116,48 @@ jobs:
           artifact-name: bundles-flatpak
           cache: false
 
+  arch:
+    name: Bundle (arch)
+    needs: bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    container:
+      image: archlinux:base-devel
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: bundles-linux
+          path: bundles
+      # makepkg refuses to run as root. The PKGBUILD takes the .deb just built instead of the release's, and its
+      # checksum; the dependencies are only needed at run time.
+      - name: Build the pacman package from the .deb
+        run: |
+          useradd -m builder
+          mkdir /build
+          cp packaging/arch/PKGBUILD /build/
+          deb=$(find bundles -name '*.deb' | head -n 1)
+          cp "$deb" /build/
+          cd /build
+          version="${TAG#v}"
+          sed -i "s/^pkgver=.*/pkgver=${version}/" PKGBUILD
+          sed -i 's|^source=.*|source=("${_deb}")|' PKGBUILD
+          sed -i "s/^sha256sums=.*/sha256sums=('$(sha256sum "$(basename "$deb")" | cut -d' ' -f1)')/" PKGBUILD
+          test -f "Potato.Pokemon.Randomizer_${version}_amd64.deb"
+          chown -R builder /build
+          su builder -c 'makepkg --nodeps --noconfirm'
+          ls -l /build/*.pkg.tar.zst
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: bundles-arch
+          if-no-files-found: error
+          path: /build/*.pkg.tar.zst
+
   release:
     name: Draft release
-    needs: [bundle, flatpak]
+    needs: [bundle, flatpak, arch]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

@@ -12,6 +12,7 @@ notes. There are two ways to build the bundles:
 | --- | --- | --- |
 | AppImage, `.deb`, `.rpm` | ubuntu-22.04 | `linux` |
 | Flatpak (`potato-pokemon-randomizer_X.Y.Z_x86_64.flatpak`) | flatpak-builder container | `flatpak` |
+| Arch package (`potato-pokemon-randomizer-X.Y.Z-1-x86_64.pkg.tar.zst`), from the `.deb` | archlinux container | no: `makepkg` in `packaging/arch` |
 | Windows NSIS installer (`*_x64-setup.exe`) | windows-latest | `windows` (cross-compiled) |
 | Windows `.msi` | windows-latest | no: WiX only runs on Windows |
 | macOS universal `.dmg` | macos-latest | no |
@@ -28,8 +29,10 @@ Bundles are not signed yet: Windows SmartScreen and macOS Gatekeeper warn on fir
 3. Add the release to `packaging/flatpak/io.github.techneut92.potato-pokemon-randomizer.metainfo.xml`, newest
    first: `<release version="X.Y.Z" date="YYYY-MM-DD">` with a short description. `tools/bundle.sh flatpak` refuses
    to build without it. Validate with `appstreamcli validate --no-net packaging/flatpak/*.metainfo.xml`.
-4. Run `tools/ci.sh`, then commit (`chore: release X.Y.Z`) and merge to `main`.
-5. Tag the merged commit and push the tag:
+4. Set `pkgver` in `packaging/arch/PKGBUILD` (and `pkgrel=1`). Its `sha256sums` follows once the release's `.deb`
+   is published: `updpkgsums` in `packaging/arch`, in a commit after the release.
+5. Run `tools/ci.sh`, then commit (`chore: release X.Y.Z`) and merge to `main`.
+6. Tag the merged commit and push the tag:
 
    ```sh
    git tag -a vX.Y.Z -m "X.Y.Z"
@@ -99,7 +102,8 @@ The final checks happen at release time, on the bundles that will be published:
   randomize, save with a log; then `flatpak uninstall --user io.github.techneut92.potato-pokemon-randomizer`.
 - **Windows:** run the setup exe on Windows (or under Wine for a rough check) and start the app; WebView2 is
   installed by the installer when missing.
-- **AppImage / .deb / .rpm:** start the app once on a matching distribution.
+- **AppImage / .deb / .rpm / Arch package:** start the app once on a matching distribution (the Arch package
+  installs with `sudo pacman -U potato-pokemon-randomizer-X.Y.Z-1-x86_64.pkg.tar.zst`).
 
 ## Flatpak notes
 

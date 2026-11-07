@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- An Arch Linux package (`.pkg.tar.zst`) among the release bundles, made from the `.deb` by `packaging/arch/PKGBUILD`.
+
 ## [0.1.0] - 2026-11-08
 
 First release.
