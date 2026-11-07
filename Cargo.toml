@@ -1,0 +1,55 @@
+[workspace]
+resolver = "3"
+members = ["crates/*", "src-tauri"]
+# The desktop crate needs the WebView system libraries; keep plain `cargo test` working without them.
+default-members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.99"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/techneut92/potato-pokemon-randomizer"
+publish = false
+
+[workspace.dependencies]
+ppr-formats = { path = "crates/ppr-formats" }
+ppr-model = { path = "crates/ppr-model" }
+ppr-romio = { path = "crates/ppr-romio" }
+ppr-random = { path = "crates/ppr-random" }
+ppr-service = { path = "crates/ppr-service" }
+ppr-settings = { path = "crates/ppr-settings" }
+
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+png = "0.18.1"
+proptest = "1.12.0"
+rand_chacha = "0.10.0"
+rand_core = "0.10.1"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha2 = "0.10.9"
+tempfile = "3.27.0"
+thiserror = "2.0.21"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+ts-rs = "12.0.1"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+unreachable_pub = "warn"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
+must_use_candidate = "allow"
+unwrap_used = "warn"
+dbg_macro = "warn"
+print_stdout = "warn"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true

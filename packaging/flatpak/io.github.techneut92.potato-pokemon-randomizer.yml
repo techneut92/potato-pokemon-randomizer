@@ -1,0 +1,53 @@
+# Flatpak of the desktop app, made from the release binary that `pnpm tauri build` leaves in target/release.
+# tools/bundle.sh flatpak builds it and exports the single-file bundle; see docs/release.md.
+#
+# The binary is not built here: the Tauri build already embeds the frontend, and building Rust inside the SDK
+# needs the rust-stable extension plus vendored cargo and pnpm sources (flatpak-cargo-generator), which only
+# Flathub would require.
+id: io.github.techneut92.potato-pokemon-randomizer
+runtime: org.gnome.Platform
+runtime-version: '51'
+sdk: org.gnome.Sdk
+command: potato-pokemon-randomizer
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --device=dri
+  # The ROM, the batch folder and settings files are chosen through the file chooser portal, but after a run the
+  # log is written next to the randomized ROM without a dialog, and the recent list reopens ROMs by path. Neither
+  # works with only the files the portal hands out, so the app sees the home folder (not the whole host).
+  - --filesystem=home
+modules:
+  - name: potato-pokemon-randomizer
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 potato-pokemon-randomizer -t /app/bin
+      - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications
+      - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
+      - |
+        for size in 32 64 128 256 512; do
+          install -Dm644 icon-${size}.png /app/share/icons/hicolor/${size}x${size}/apps/${FLATPAK_ID}.png
+        done
+    sources:
+      - type: file
+        path: ../../target/release/potato-pokemon-randomizer
+      - type: file
+        path: io.github.techneut92.potato-pokemon-randomizer.desktop
+      - type: file
+        path: io.github.techneut92.potato-pokemon-randomizer.metainfo.xml
+      - type: file
+        path: ../../src-tauri/icons/32x32.png
+        dest-filename: icon-32.png
+      - type: file
+        path: ../../src-tauri/icons/64x64.png
+        dest-filename: icon-64.png
+      - type: file
+        path: ../../src-tauri/icons/128x128.png
+        dest-filename: icon-128.png
+      - type: file
+        path: ../../src-tauri/icons/128x128@2x.png
+        dest-filename: icon-256.png
+      - type: file
+        path: ../../src-tauri/icons/icon.png
+        dest-filename: icon-512.png

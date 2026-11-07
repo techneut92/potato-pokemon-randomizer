@@ -1,0 +1,27 @@
+[package]
+name = "ppr-romio"
+description = "ROM detection and per-generation ROM handlers."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[features]
+# Synthetic ROMs for tests in other crates (`ppr_romio::testing`).
+test-fixtures = []
+
+[dependencies]
+ppr-formats.workspace = true
+ppr-model.workspace = true
+png.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+ppr-formats = { workspace = true, features = ["testing"] }
+tempfile.workspace = true

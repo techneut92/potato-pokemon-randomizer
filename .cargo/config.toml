@@ -1,0 +1,3 @@
+[env]
+# ts-rs writes the TypeScript bindings for the frontend here (ADR 0004).
+TS_RS_EXPORT_DIR = { value = "src/lib/generated", relative = true }

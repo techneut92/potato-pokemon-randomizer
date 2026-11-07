@@ -1,0 +1,72 @@
+[package]
+name = "ppr-fuzz"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "GPL-3.0-or-later"
+
+[package.metadata]
+cargo-fuzz = true
+
+# Not part of the main workspace: cargo-fuzz needs nightly and libFuzzer.
+[workspace]
+members = ["."]
+
+[dependencies]
+libfuzzer-sys = "0.4"
+ppr-formats = { path = "../crates/ppr-formats" }
+ppr-romio = { path = "../crates/ppr-romio", features = ["test-fixtures"] }
+ppr-settings = { path = "../crates/ppr-settings" }
+ppr-service = { path = "../crates/ppr-service" }
+
+[[bin]]
+name = "lz10"
+path = "fuzz_targets/lz10.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "settings"
+path = "fuzz_targets/settings.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "premade_seed"
+path = "fuzz_targets/premade_seed.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "gen3_rom"
+path = "fuzz_targets/gen3_rom.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "blz"
+path = "fuzz_targets/blz.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "narc"
+path = "fuzz_targets/narc.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "nds_rom"
+path = "fuzz_targets/nds_rom.rs"
+test = false
+doc = false
+bench = false
+
+[profile.release]
+debug = 1

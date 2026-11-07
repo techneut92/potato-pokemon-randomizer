@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Potato Pokemon Randomizer",
+  "version": "../package.json",
+  "identifier": "io.github.techneut92.potato-pokemon-randomizer",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Game",
+    "shortDescription": "Randomize Pokémon games",
+    "longDescription": "Randomizes Pokémon games from Generation 1 to 7: Pokémon, moves, trainers, wild encounters, items and more.",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
+  }
+}

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Potato Pokémon Randomizer
+GenericName=Game Randomizer
+Comment=Randomize Pokémon games
+Exec=potato-pokemon-randomizer
+Icon=io.github.techneut92.potato-pokemon-randomizer
+Terminal=false
+Categories=Game;
+Keywords=pokemon;randomizer;rom;nintendo;

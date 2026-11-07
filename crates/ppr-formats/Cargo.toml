@@ -1,0 +1,23 @@
+[package]
+name = "ppr-formats"
+description = "Binary formats of Nintendo handheld ROMs: headers, containers and codecs. No Pokémon knowledge."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[features]
+# Synthetic 3DS images for tests in other crates (`ppr_formats::ctr::testing`).
+testing = []
+
+[dependencies]
+sha2.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

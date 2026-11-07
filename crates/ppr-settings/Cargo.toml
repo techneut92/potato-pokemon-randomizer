@@ -1,0 +1,19 @@
+[package]
+name = "ppr-settings"
+description = "Randomizer settings and their settings-string codec."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+ppr-formats.workspace = true
+ppr-model.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+ts-rs.workspace = true
+
+[lints]
+workspace = true

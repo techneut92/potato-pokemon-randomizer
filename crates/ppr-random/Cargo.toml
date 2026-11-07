@@ -1,0 +1,25 @@
+[package]
+name = "ppr-random"
+description = "Randomization pipeline: seeds, per-step RNG streams, progress and cancellation."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+ppr-model.workspace = true
+ppr-settings.workspace = true
+rand_chacha.workspace = true
+rand_core.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+ppr-romio.workspace = true
+proptest.workspace = true
+serde_json.workspace = true
+
+[lints]
+workspace = true

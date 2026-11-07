@@ -1,0 +1,28 @@
+[package]
+name = "ppr-service"
+description = "Use cases shared by the desktop app and the CLI."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+ppr-formats.workspace = true
+ppr-model.workspace = true
+ppr-random.workspace = true
+ppr-romio.workspace = true
+ppr-settings.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tempfile.workspace = true
+thiserror.workspace = true
+ts-rs.workspace = true
+
+[dev-dependencies]
+ppr-formats = { workspace = true, features = ["testing"] }
+ppr-romio = { workspace = true, features = ["test-fixtures"] }
+
+[lints]
+workspace = true

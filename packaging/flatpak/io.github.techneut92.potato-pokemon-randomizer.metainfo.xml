@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.techneut92.potato-pokemon-randomizer</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <name>Potato Pokémon Randomizer</name>
+  <summary>Randomize Pokémon games</summary>
+  <developer id="io.github.techneut92">
+    <name>Dylan Westra</name>
+  </developer>
+
+  <description>
+    <p>
+      Potato Pokémon Randomizer makes a new game out of a Pokémon ROM you own: different starters, wild and
+      static encounters, trainers, movesets, evolutions, types, items and more, from a seed that reproduces the
+      same game.
+    </p>
+    <ul>
+      <li>Games from Generation 1 to 7 are detected; randomizing works on more of them with every release</li>
+      <li>Settings strings, settings files and premade seeds can be loaded and shared</li>
+      <li>Batch runs make many randomized games at once, each with its own seed and log</li>
+      <li>Works offline: nothing is downloaded or sent</li>
+    </ul>
+    <p>No games are included; bring your own ROM files.</p>
+  </description>
+
+  <launchable type="desktop-id">io.github.techneut92.potato-pokemon-randomizer.desktop</launchable>
+  <provides>
+    <binary>potato-pokemon-randomizer</binary>
+  </provides>
+
+  <url type="homepage">https://github.com/techneut92/potato-pokemon-randomizer</url>
+  <url type="bugtracker">https://github.com/techneut92/potato-pokemon-randomizer/issues</url>
+  <url type="vcs-browser">https://github.com/techneut92/potato-pokemon-randomizer</url>
+
+  <categories>
+    <category>Game</category>
+  </categories>
+  <keywords>
+    <keyword>pokemon</keyword>
+    <keyword>randomizer</keyword>
+    <keyword>rom</keyword>
+  </keywords>
+
+  <requires>
+    <display_length compare="ge">768</display_length>
+  </requires>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="0.1.0" date="2026-11-08">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

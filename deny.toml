@@ -1,0 +1,41 @@
+# cargo-deny: run `cargo deny check` before a release (docs/testing.md).
+
+[graph]
+all-features = true
+
+[advisories]
+ignore = [
+    # proc-macro-error is unmaintained; it comes in through gtk 0.18, which Tauri uses on Linux.
+    # Nothing to do until Tauri moves off gtk-rs 0.18.
+    { id = "RUSTSEC-2024-0370", reason = "build-time only, through Tauri's gtk 0.18" },
+]
+
+[licenses]
+# Every licence here is compatible with the app's GPL-3.0-or-later.
+allow = [
+    "0BSD",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC0-1.0",
+    "GPL-3.0-or-later",
+    "LGPL-2.1-or-later",
+    "MIT",
+    "MIT-0",
+    "MPL-2.0",
+    "Unicode-3.0",
+    "Unlicense",
+    "Zlib",
+]
+confidence-threshold = 0.9
+
+[bans]
+# Tauri brings in older majors of several crates (gtk-rs 0.18, toml, syn); nothing to gain from refusing them.
+multiple-versions = "allow"
+wildcards = "deny"
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

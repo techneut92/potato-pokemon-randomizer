@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3fc59a"/>
+      <stop offset="0.55" stop-color="#16867a"/>
+      <stop offset="1" stop-color="#1c3f63"/>
+    </linearGradient>
+    <radialGradient id="potato" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#f6d08f"/>
+      <stop offset="0.6" stop-color="#d9a05a"/>
+      <stop offset="1" stop-color="#a8692f"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0b2433" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <!-- tile -->
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#tile)"/>
+  <rect x="8" y="8" width="112" height="56" rx="26" fill="#ffffff" opacity="0.08"/>
+  <!-- shuffle arrows -->
+  <g fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.9">
+    <path d="M22 58 A43 43 0 0 1 84 22"/>
+    <path d="M106 70 A43 43 0 0 1 44 106"/>
+  </g>
+  <g fill="#ffffff" opacity="0.9">
+    <path d="M93 16 L94 36 L76 29 Z"/>
+    <path d="M35 112 L34 92 L52 99 Z"/>
+  </g>
+  <!-- potato -->
+  <g filter="url(#shadow)" transform="rotate(-28 64 66)">
+    <path d="M24 68 C22 54 32 46 46 46 C56 46 60 42 72 42 C88 42 104 48 106 62
+             C108 76 98 86 82 87 C72 88 66 92 54 91 C38 90 26 82 24 68 Z"
+          fill="url(#potato)" stroke="#7a4a20" stroke-width="2.5"/>
+    <!-- highlight -->
+    <path d="M36 56 C42 50 52 49 58 50" fill="none" stroke="#fff3d6" stroke-width="3.5" stroke-linecap="round" opacity="0.75"/>
+    <!-- eyes, placed like the five pips of a die -->
+    <g fill="none" stroke="#7a4a20" stroke-width="2.6" stroke-linecap="round">
+      <path d="M40 60 q4 3 8 0"/>
+      <path d="M84 55 q4 3 8 0"/>
+      <path d="M62 67 q4 3 8 0"/>
+      <path d="M40 79 q4 3 8 0"/>
+      <path d="M84 75 q4 3 8 0"/>
+    </g>
+    <g fill="#a8692f" opacity="0.55">
+      <circle cx="44" cy="62" r="1.6"/>
+      <circle cx="88" cy="57" r="1.6"/>
+      <circle cx="66" cy="69" r="1.6"/>
+      <circle cx="44" cy="81" r="1.6"/>
+      <circle cx="88" cy="77" r="1.6"/>
+    </g>
+    <!-- sprout -->
+    <path d="M70 43 C69 36 72 31 77 28" fill="none" stroke="#6fd36a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M73 31 C74 25 80 22 85 23 C84 28 78 32 73 31 Z" fill="#7be07a" stroke="#3f9c45" stroke-width="1.2"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+node_modules/
+dist/
+target/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# flatpak-builder state when run without tools/bundle.sh (which keeps it in target/flatpak)
+/.flatpak-builder/
+
+# Rust
+/target/
+/src-tauri/gen/
+
+# cargo-fuzz runs
+/fuzz/corpus/
+/fuzz/artifacts/
+/fuzz/coverage/
+/coverage/
