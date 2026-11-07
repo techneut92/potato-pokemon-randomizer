@@ -1,0 +1,23 @@
+# Repackages the release's .deb as a pacman package. The release workflow builds it from the .deb it just made
+# (see .github/workflows/release.yml); by hand: `makepkg -si` downloads the .deb of `pkgver` from the release.
+pkgname=potato-pokemon-randomizer
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Randomize Pokémon games from Generation 1 to 7'
+arch=('x86_64')
+url='https://github.com/techneut92/potato-pokemon-randomizer'
+license=('GPL-3.0-or-later')
+depends=('webkit2gtk-4.1' 'gtk3' 'hicolor-icon-theme')
+optdepends=('xdg-utils: open links in the browser')
+options=('!strip' '!debug')
+_deb="Potato.Pokemon.Randomizer_${pkgver}_amd64.deb"
+source=("${_deb}::${url}/releases/download/v${pkgver}/${_deb}")
+noextract=("${_deb}")
+sha256sums=('9db357044819b6e2bf34f998a658a97b366ef58433f136fa6350b8f9f62a8aec')
+
+package() {
+  bsdtar -xOf "${_deb}" 'data.tar.*' | bsdtar -xf - -C "${pkgdir}"
+  # A file name without spaces, as desktop files usually have.
+  mv "${pkgdir}/usr/share/applications/Potato Pokemon Randomizer.desktop" \
+    "${pkgdir}/usr/share/applications/${pkgname}.desktop"
+}
