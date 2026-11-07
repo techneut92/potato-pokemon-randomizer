@@ -43,8 +43,7 @@ builds the bundles on Linux, Windows and macOS, the Flatpak from the Linux binar
 for the tag with the CHANGELOG entry as notes. Download a few bundles, try them (see the checks below), then publish
 the draft on GitHub.
 
-`ci.yml` stays on demand; once the repository is public, add `push` and `pull_request` triggers there (see the
-comment at its top).
+`ci.yml` runs on every push to `main` and every pull request.
 
 ## 2b. Local fallback: `tools/bundle.sh` + `tools/release.sh`
 

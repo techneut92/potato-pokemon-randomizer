@@ -4,9 +4,8 @@ name: Release
 # version's CHANGELOG entry as notes: Linux (AppImage, .deb, .rpm), the Flatpak, Windows (NSIS and .msi) and a
 # universal macOS .dmg. Runs when a v* tag is pushed, or on demand for an existing tag.
 #
-# Hosted runners need the repository to be public (or a paid plan). Until then, tools/bundle.sh and
-# tools/release.sh build and publish the same bundles from a Linux machine, without the .msi and .dmg;
-# see docs/release.md.
+# Without hosted runners, tools/bundle.sh and tools/release.sh build and publish the same bundles from a Linux
+# machine, without the .msi and .dmg; see docs/release.md.
 on:
   push:
     tags: ['v*']
