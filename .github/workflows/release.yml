@@ -156,14 +156,14 @@ jobs:
           useradd -m builder
           mkdir /build
           cp packaging/arch/PKGBUILD /build/
-          deb=$(find bundles -name '*.deb' | head -n 1)
-          cp "$deb" /build/
-          cd /build
+          # The artifact keeps the spaces in the file name; the PKGBUILD expects the release's dotted name.
           version="${TAG#v}"
+          deb="Potato.Pokemon.Randomizer_${version}_amd64.deb"
+          cp "$(find bundles -name '*.deb' | head -n 1)" "/build/${deb}"
+          cd /build
           sed -i "s/^pkgver=.*/pkgver=${version}/" PKGBUILD
           sed -i 's|^source=.*|source=("${_deb}")|' PKGBUILD
-          sed -i "s/^sha256sums=.*/sha256sums=('$(sha256sum "$(basename "$deb")" | cut -d' ' -f1)')/" PKGBUILD
-          test -f "Potato.Pokemon.Randomizer_${version}_amd64.deb"
+          sed -i "s/^sha256sums=.*/sha256sums=('$(sha256sum "${deb}" | cut -d' ' -f1)')/" PKGBUILD
           chown -R builder /build
           su builder -c 'makepkg --nodeps --noconfirm'
           ls -l /build/*.pkg.tar.zst
