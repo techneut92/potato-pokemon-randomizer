@@ -13,7 +13,7 @@ options=('!strip' '!debug')
 _deb="Potato.Pokemon.Randomizer_${pkgver}_amd64.deb"
 source=("${_deb}::${url}/releases/download/v${pkgver}/${_deb}")
 noextract=("${_deb}")
-sha256sums=('9db357044819b6e2bf34f998a658a97b366ef58433f136fa6350b8f9f62a8aec')
+sha256sums=('110b0ba758fc8cafe00a983fe9f943345716085af82c8cc786bd0ff1722c93e8')
 
 package() {
   bsdtar -xOf "${_deb}" 'data.tar.*' | bsdtar -xf - -C "${pkgdir}"
