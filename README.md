@@ -101,6 +101,13 @@ prerequisites installed; the other crates build on the host.
 Tests never use copyrighted ROMs. ROM headers and whole Gen 3 ROMs are built synthetically
 (`ppr_romio::testing`); see [the test strategy](docs/testing.md).
 
+## Troubleshooting
+
+- **Linux, the window doesn't open or the app exits right away** (seen with NVIDIA's driver under GNOME on
+  Wayland, `Error 71 (Protocol error)`): the app already turns off WebKit's DMA-BUF renderer when NVIDIA's driver is
+  loaded. On other setups, start it with `WEBKIT_DISABLE_DMABUF_RENDERER=1`; for the Flatpak, once:
+  `flatpak override --user --env=WEBKIT_DISABLE_DMABUF_RENDERER=1 io.github.techneut92.potato-pokemon-randomizer`.
+
 ## Support
 
 The randomizer is free and stays free. If it saved you some time and you'd like to say thanks, you can

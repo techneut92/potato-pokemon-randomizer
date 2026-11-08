@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - An Arch Linux package (`.pkg.tar.zst`) among the release bundles, made from the `.deb` by `packaging/arch/PKGBUILD`.
 - ARM64 bundles: AppImage, `.deb`, `.rpm` and Flatpak for Linux, and an installer for Windows.
 
+### Fixed
+
+- Linux: the app no longer exits right at start with NVIDIA's driver under GNOME on Wayland (explicit sync); it
+  turns off WebKit's DMA-BUF renderer when that driver is loaded.
+
 ## [0.1.0] - 2026-11-08
 
 First release.
