@@ -9,6 +9,10 @@ mod commands;
 mod window;
 
 fn main() {
+    #[cfg(target_os = "linux")]
+    if let Some(code) = restart_without_dmabuf_renderer() {
+        std::process::exit(code);
+    }
     tracing_subscriber::fmt()
         .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
         .init();
@@ -51,4 +55,23 @@ fn main() {
         tracing::error!("the app stopped with an error: {e}");
         std::process::exit(1);
     }
+}
+
+/// The DMA-BUF renderer of `WebKitGTK` breaks with NVIDIA's proprietary driver under compositors that enforce
+/// explicit sync: GNOME closes the connection ("Explicit Sync only supported on dmabuf buffers") and the window never
+/// opens. With that driver loaded and `WEBKIT_DISABLE_DMABUF_RENDERER` unset, this runs the app again with the renderer off and
+/// returns its exit code. Setting the variable for this process instead would need unsafe code.
+#[cfg(target_os = "linux")]
+fn restart_without_dmabuf_renderer() -> Option<i32> {
+    const VAR: &str = "WEBKIT_DISABLE_DMABUF_RENDERER";
+    if std::env::var_os(VAR).is_some() || !std::path::Path::new("/proc/driver/nvidia/version").exists() {
+        return None;
+    }
+    let exe = std::env::current_exe().ok()?;
+    let status = std::process::Command::new(exe)
+        .args(std::env::args_os().skip(1))
+        .env(VAR, "1")
+        .status()
+        .ok()?;
+    Some(status.code().unwrap_or(1))
 }
