@@ -1,7 +1,7 @@
 {
   "name": "potato-pokemon-randomizer",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cross-platform Pokémon game randomizer (Svelte frontend, Tauri + Rust backend).",
   "type": "module",
   "scripts": {

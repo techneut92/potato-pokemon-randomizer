@@ -54,6 +54,11 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="0.1.1" date="2026-11-08">
+      <description>
+        <p>Starts on NVIDIA's driver under GNOME on Wayland, and adds ARM64 and Arch Linux packages.</p>
+      </description>
+    </release>
     <release version="0.1.0" date="2026-11-08">
       <description>
         <p>First release.</p>

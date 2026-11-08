@@ -1,7 +1,7 @@
 # Repackages the release's .deb as a pacman package. The release workflow builds it from the .deb it just made
 # (see .github/workflows/release.yml); by hand: `makepkg -si` downloads the .deb of `pkgver` from the release.
 pkgname=potato-pokemon-randomizer
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc='Randomize Pokémon games from Generation 1 to 7'
 arch=('x86_64')
