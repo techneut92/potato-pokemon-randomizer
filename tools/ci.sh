@@ -5,6 +5,7 @@
 #   tools/ci.sh          everything
 #   tools/ci.sh web      the frontend checks (pnpm)
 #   tools/ci.sh rust     the Rust checks (cargo, cargo-deny)
+#   tools/ci.sh gpui     the GPUI front end (needs its system libraries, see src-gpui/README.md)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -21,8 +22,8 @@ fi
 if [[ $part == all || $part == rust ]]; then
   export RUSTFLAGS="-D warnings" CARGO_TERM_COLOR="${CARGO_TERM_COLOR:-always}"
   step "cargo fmt"; cargo fmt --all --check && cargo fmt --manifest-path fuzz/Cargo.toml --check
-  step "cargo clippy"; cargo clippy -q --workspace --all-targets --locked
-  step "cargo test"; cargo test -q --workspace --locked
+  step "cargo clippy"; cargo clippy -q --workspace --exclude ppr-gpui --all-targets --locked
+  step "cargo test"; cargo test -q --workspace --exclude ppr-gpui --locked
   step "generated TypeScript bindings"
   if [[ -n $(git status --porcelain -- src/lib/generated) ]]; then
     git status --short -- src/lib/generated
@@ -37,7 +38,12 @@ if [[ $part == all || $part == rust ]]; then
     echo "cargo-deny is not installed (cargo install --locked cargo-deny); skipping" >&2
   fi
   if [[ -n ${PPR_TEST_ROMS:-} ]]; then
-    step "tests on the ROMs in $PPR_TEST_ROMS"; cargo test -q --workspace --locked -- --include-ignored
+    step "tests on the ROMs in $PPR_TEST_ROMS"; cargo test -q --workspace --exclude ppr-gpui --locked -- --include-ignored
   fi
+fi
+if [[ $part == all || $part == gpui ]]; then
+  export RUSTFLAGS="-D warnings ${PPR_GPUI_RUSTFLAGS:-}" CARGO_TERM_COLOR="${CARGO_TERM_COLOR:-always}"
+  step "cargo clippy (GPUI)"; cargo clippy -q -p ppr-gpui --all-targets --locked
+  step "cargo test (GPUI)"; cargo test -q -p ppr-gpui --locked
 fi
 step "all checks passed"

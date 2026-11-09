@@ -1,7 +1,7 @@
 [workspace]
 resolver = "3"
-members = ["crates/*", "src-tauri"]
-# The desktop crate needs the WebView system libraries; keep plain `cargo test` working without them.
+members = ["crates/*", "src-tauri", "src-gpui"]
+# The desktop crates need the WebView and GPUI system libraries; keep plain `cargo test` working without them.
 default-members = ["crates/*"]
 
 [workspace.package]

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- An experimental native front end in `src-gpui/`, built with GPUI: the start screen (open or drop a ROM, recent
+  ROMs, supported games), using the same service layer as the desktop app. It is not in the release bundles yet;
+  run it with `cargo run -p ppr-gpui`. ADR 0009 sets the rules for a later switch.
+
+### Changed
+
+- Opening the Ko-fi page moved from the desktop app into the service layer, so every front end shares it.
+
 ## [0.1.1] - 2026-11-08
 
 ### Added

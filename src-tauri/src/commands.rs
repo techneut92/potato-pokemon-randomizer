@@ -343,62 +343,11 @@ pub(crate) fn cancel_randomize(run: State<'_, CurrentRun>) {
     run.cancel();
 }
 
-/// The support page the header's support button opens. The address is fixed here, so the page can't open others.
-const SUPPORT_URL: &str = "https://ko-fi.com/techneut92";
-
-/// Opens the support page in the default browser. Async, so waiting for the opener doesn't block the window.
+/// Opens the support page in the default browser, off the async runtime so waiting for the opener doesn't block the
+/// window.
 #[tauri::command]
 pub(crate) async fn open_support_page() -> Result<(), ApiError> {
-    open_url(SUPPORT_URL)
-}
-
-/// The commands that can open `url` in a browser, tried in turn until one succeeds.
-fn openers(url: &str) -> Vec<std::process::Command> {
-    use std::process::Command;
-    #[cfg(target_os = "windows")]
-    {
-        let mut c = Command::new("rundll32");
-        c.args(["url.dll,FileProtocolHandler", url]);
-        vec![c]
-    }
-    #[cfg(target_os = "macos")]
-    {
-        let mut c = Command::new("open");
-        c.arg(url);
-        vec![c]
-    }
-    // `xdg-open` is the usual opener. Where it finds no browser (Flatpak, containers) the desktop portal can open
-    // one on the host, and `gio` covers systems without `xdg-open`.
-    #[cfg(not(any(target_os = "windows", target_os = "macos")))]
-    {
-        let mut xdg = Command::new("xdg-open");
-        xdg.arg(url);
-        let mut portal = Command::new("gdbus");
-        portal.args(["call", "--session", "--dest", "org.freedesktop.portal.Desktop"]);
-        portal.args(["--object-path", "/org/freedesktop/portal/desktop"]);
-        portal.args(["--method", "org.freedesktop.portal.OpenURI.OpenURI", "", url, "{}"]);
-        let mut gio = Command::new("gio");
-        gio.args(["open", url]);
-        vec![xdg, portal, gio]
-    }
-}
-
-/// Opens `url` with the first opener that succeeds.
-fn open_url(url: &str) -> Result<(), ApiError> {
-    let mut last = String::from("no opener");
-    for mut cmd in openers(url) {
-        cmd.stdout(std::process::Stdio::null())
-            .stderr(std::process::Stdio::null());
-        match cmd.status() {
-            Ok(s) if s.success() => return Ok(()),
-            Ok(s) => last = s.to_string(),
-            Err(e) => last = e.to_string(),
-        }
-    }
-    Err(ApiError {
-        code: "open_failed",
-        message: format!("could not open {url}: {last}"),
-    })
+    blocking(ppr_service::open_support_page).await
 }
 
 #[cfg(test)]

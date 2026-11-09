@@ -1,0 +1,28 @@
+[package]
+name = "ppr-gpui"
+description = "Native desktop front end drawn with GPUI (start screen only, not shipped yet)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "potato-gpui"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+gpui = "0.2.2"
+ppr-service.workspace = true
+
+# Compile the Metal shaders at start-up, so a build doesn't need Xcode's Metal toolchain.
+[target.'cfg(target_os = "macos")'.dependencies]
+gpui = { version = "0.2.2", features = ["runtime_shaders"] }
+
+[dev-dependencies]
+ppr-model.workspace = true
+
+[lints]
+workspace = true
