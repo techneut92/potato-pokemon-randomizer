@@ -56,6 +56,7 @@ crates/
   ppr-service/               use cases shared by the desktop app and the CLI
   ppr-cli/                   `ppr` command-line tool
 src-tauri/                   desktop app (Tauri 2), thin command layer over ppr-service
+src-gpui/                    experimental native front end (GPUI): the start screen only, not shipped (ADR 0009)
 src/
   App.svelte                 app shell
   lib/
@@ -89,8 +90,9 @@ tools/release.sh X.Y.Z   # attach them to the GitHub Release of tag vX.Y.Z
 pnpm check               # svelte-check and tsc, fails on warnings
 pnpm test                # frontend unit tests (Vitest)
 cargo test               # Rust tests; also regenerates src/lib/generated
-cargo clippy --workspace --all-targets -- -D warnings
-tools/ci.sh              # every CI check, plus cargo deny; web | rust for one half
+cargo clippy --workspace --exclude ppr-gpui --all-targets -- -D warnings
+tools/ci.sh              # every CI check, plus cargo deny; web | rust | gpui for one part
+cargo run -p ppr-gpui    # the experimental native start screen (src-gpui/README.md)
 cargo run -p ppr-cli -- identify <rom>...   # or: games
 cargo run -p ppr-cli -- randomize <rom> -o <out> --starters random --seed 42
 ```

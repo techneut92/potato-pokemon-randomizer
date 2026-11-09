@@ -13,3 +13,4 @@ rewritten; a later record supersedes an earlier one instead.
 | [0006](0006-errors-progress-cancellation.md) | Errors, logging, progress and cancellation | Accepted |
 | [0007](0007-licensing.md) | GPL-3.0-or-later, and no ROMs in the repository | Proposed |
 | [0008](0008-manual-edits.md) | Manual edits: a versioned edit list applied after the randomizers | Accepted |
+| [0009](0009-native-ui-with-gpui.md) | A native GPUI front end next to the web UI, behind the same service layer | Proposed |

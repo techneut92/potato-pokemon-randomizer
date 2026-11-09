@@ -1,7 +1,7 @@
 //! Use cases shared by every front end (Facade pattern, ADR 0001).
 //!
-//! The desktop app and the CLI call these functions and never reach into the lower crates themselves, so both
-//! behave the same.
+//! The desktop front ends and the CLI call these functions and never reach into the lower crates themselves, so
+//! they all behave the same.
 
 mod batch;
 mod check_value;
@@ -14,6 +14,7 @@ mod premade;
 mod randomize;
 mod roms;
 mod settings_files;
+mod support;
 
 pub use batch::{BatchProgress, BatchReport, BatchRequest, BatchRom, batch_output, randomize_batch};
 pub use check_value::check_value;
@@ -53,3 +54,4 @@ pub use settings_files::{
     SETTINGS_EXTENSION, SharedSettings, load_settings_file, read_settings_string, save_settings_file,
     settings_file_path, settings_string,
 };
+pub use support::{SUPPORT_URL, open_support_page};

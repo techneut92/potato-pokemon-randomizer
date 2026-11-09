@@ -45,6 +45,14 @@ pub enum ServiceError {
     /// An edits file can't be loaded for the loaded game.
     #[error(transparent)]
     EditFile(#[from] crate::EditFileError),
+    /// No browser could be started for a link.
+    #[error("could not open {url}: {reason}")]
+    Browser {
+        /// The link.
+        url: String,
+        /// What the last opener reported.
+        reason: String,
+    },
 }
 
 /// Serializable form of [`ServiceError`] for front ends.
@@ -61,7 +69,7 @@ impl ServiceError {
     /// Stable machine-readable code.
     pub fn code(&self) -> &'static str {
         match self {
-            Self::Open { .. } => "open_failed",
+            Self::Open { .. } | Self::Browser { .. } => "open_failed",
             Self::Rom(ppr_romio::RomError::NotYetSupported { .. }) => "generation_not_supported",
             Self::Rom(ppr_romio::RomError::Unsupported(_)) => "rom_unsupported",
             Self::Rom(_) => "rom_unreadable",
